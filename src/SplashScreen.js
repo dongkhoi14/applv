@@ -1,8 +1,7 @@
 import React from "react";
-import { View,Text, Dimensions,Image, Button } from "react-native";
+import { View,Text, Dimensions,Image, Button ,TouchableOpacity} from "react-native";
 import { StyleSheet } from "react-native";
-
-const SplashScreen = ()=>{
+const SplashScreen = ({navigation})=>{
     return (
         <View style={styles.container}>
             
@@ -12,11 +11,14 @@ const SplashScreen = ()=>{
             <Text style={{fontSize:20}}>Trường Đại học Cần Thơ</Text>
         </View>
         <View style={styles.footer}>
-        <Button title="Đăng nhập"/>
+        <TouchableOpacity>
+            <Text>Tiep tuc</Text>
+        </TouchableOpacity>
         </View>
         </View>
     )
 }
+
 
 
 const {height} = Dimensions.get("screen");

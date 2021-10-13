@@ -2,7 +2,9 @@ import React from "react";
 import { View, Text, Dimensions, Image, SafeAreaView, TextInput, StatusBar, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
-
+import {  StackNavigator,DrawerNavigator, NavigationActions } from 'react-navigation';
+import StudentScreen from "../screen/studentScreen";
+import { NavigationRouteContext } from "@react-navigation/native";
 
 
 const userInfo = {username:"admin", password:"admin"};
@@ -56,7 +58,7 @@ class LoginScreen extends React.Component{
     }
     _login = async () =>{
         if (userInfo.username != "" && userInfo.password !=""){
-            await fetch('http://127.0.0.1:8000/api/auth/login',{
+            await fetch('http://localhost:8000/api/auth/login',{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json',
@@ -66,9 +68,22 @@ class LoginScreen extends React.Component{
                     "password":this.state.password
                 }),
             }).then(function (response){
-                alert("Dang nhap thanh cong!")
+                
                 return response.json();
-            }).then(data => console.log(data))
+            }).then(data => {
+                console.log(data);
+                if(data.user.user_type != 3){
+                    alert("Khong ho tro");
+                }else{
+                    alert("Dang nhap thanh cong!");
+                    this.props.navigation.navigate('Student',{
+                        mssv: data.user.id,
+                        name: data.user.first_name + ' ' + data.user.last_name,
+                        username : data.user.username,
+                        email:data.user.email,
+                    });
+                }
+            })
         }else{
             alert("not ok");
         }
