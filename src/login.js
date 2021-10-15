@@ -75,7 +75,6 @@ class LoginScreen extends React.Component{
                 if(data.user.user_type != 3){
                     alert("Khong ho tro");
                 }else{
-                    alert("Dang nhap thanh cong!");
                     this.props.navigation.navigate('Student',{
                         mssv: data.user.id,
                         name: data.user.first_name + ' ' + data.user.last_name,
