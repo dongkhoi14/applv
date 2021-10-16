@@ -1,11 +1,11 @@
-import React ,{useEffect,useState}from "react";
-import {View,Text,ActivityIndicator,FlatList,TouchableOpacity,StyleSheet,Image} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-export default function subjectDetailScreen({navigation, route}){
-    const {id,ten_hoc_phan} = route.params;
+export default function subjectDetailScreen({ navigation, route }) {
+    const { id, ten_hoc_phan } = route.params;
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const getAtt = async ()=>{
+    const getAtt = async () => {
         try {
             const response = await fetch('http://localhost:8000/api/auth/att', {
                 method: 'POST',
@@ -25,26 +25,28 @@ export default function subjectDetailScreen({navigation, route}){
             setLoading(false);
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         getAtt();
-    },[])
-    return(
+    }, [])
+    return (
         <View>
             {isLoading ? <ActivityIndicator /> : (
                 <FlatList
                     data={data}
-                    keyExtractor={({ id }, index) => id.toString() }
+                    keyExtractor={({ id }, index) => id.toString()}
                     renderItem={({ item }) => (
-                       
+
+                        <TouchableOpacity onPress={() => navigation.navigate('DoAtt')}>
                             <View style={styles.container1}>
-                            <Text style={styles.title}> {item.id} {item.ngay_diem_danh}</Text>
-                            <Image source={require("../assets/n.png")} style={styles.classImage} />
-                        </View>
+                                <Text style={styles.title}> {item.id} {item.ngay_diem_danh}</Text>
+                                <Image source={require("../assets/n.png")} style={styles.classImage} />
+                            </View>
+                        </TouchableOpacity>
 
                     )}
                     inverted
                 />
-            )} 
+            )}
         </View>
     );
 }
